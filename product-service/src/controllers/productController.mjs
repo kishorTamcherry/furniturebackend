@@ -7,12 +7,20 @@ export const list = asyncHandler(async (req, res) => {
 });
 
 export const create = asyncHandler(async (req, res) => {
-  const product = await productService.createProduct(req.body);
+  const data = { ...req.body };
+  if (req.file) {
+    data.imageUrl = `${req.protocol}://${req.get('host')}/uploads/product-images/${req.file.filename}`;
+  }
+  const product = await productService.createProduct(data);
   res.status(201).json(product);
 });
 
 export const update = asyncHandler(async (req, res) => {
-  const product = await productService.updateProduct(req.params.id, req.body);
+  const data = { ...req.body };
+  if (req.file) {
+    data.imageUrl = `${req.protocol}://${req.get('host')}/uploads/product-images/${req.file.filename}`;
+  }
+  const product = await productService.updateProduct(req.params.id, data);
   res.json(product);
 });
 

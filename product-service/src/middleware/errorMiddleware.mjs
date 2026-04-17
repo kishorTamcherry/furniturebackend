@@ -9,15 +9,15 @@ export const errorMiddleware = (err, req, res, next) => {
   // Zod Validation Error Logging
   if (err instanceof ZodError || err.name === 'ZodError') {
     const issues = err.issues || err.errors || [];
-    const summary = issues.map(i => `${i.path.join('.')}: ${i.message}`).join(', ');
+    const summary = Array.isArray(issues) ? issues.map(i => `${i.path.join('.')}: ${i.message}`).join(', ') : 'Unknown validation error';
     logger.error(`[Validation Error] ${summary}`);
 
     return res.status(400).json({
       error: 'Validation Failed',
-      details: issues.map(e => ({
+      details: Array.isArray(issues) ? issues.map(e => ({
         path: e.path.join('.'),
         message: e.message
-      }))
+      })) : []
     });
   }
 
