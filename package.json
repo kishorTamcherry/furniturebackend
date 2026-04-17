@@ -1,0 +1,11 @@
+{
+  "name": "furniturebackend",
+  "version": "1.0.0",
+  "description": "Furniture backend monorepo (auth-service + product-service)",
+  "scripts": {
+    "start": "bash start.sh"
+  },
+  "dependencies": {
+    "pm2": "^5.4.3"
+  }
+}
