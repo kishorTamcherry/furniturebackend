@@ -46,3 +46,30 @@ export const verifyOtp = asyncHandler(async (req, res) => {
 
   res.json({ token, user: { id: user._id, phone: user.phone } });
 });
+
+export const getProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id).select('-password');
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  res.json(user);
+});
+
+export const updateProfile = asyncHandler(async (req, res) => {
+  const updates = {};
+  if (req.body.name !== undefined) updates.name = req.body.name;
+  if (req.body.email !== undefined) updates.email = req.body.email;
+  if (req.body.latitude !== undefined) updates.latitude = req.body.latitude;
+  if (req.body.longitude !== undefined) updates.longitude = req.body.longitude;
+  if (req.body.address !== undefined) updates.address = req.body.address;
+
+  if (Object.keys(updates).length === 0) {
+    return res.status(400).json({ error: 'No fields to update' });
+  }
+
+  const user = await User.findByIdAndUpdate(req.user.id, updates, {
+    new: true,
+    runValidators: true
+  }).select('-password');
+
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  res.json(user);
+});

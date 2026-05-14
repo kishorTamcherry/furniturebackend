@@ -5,7 +5,10 @@ const userSchema = new mongoose.Schema({
   email: { type: String, sparse: true, unique: true },
   password: { type: String },
   name: { type: String },
-  phone: { type: String, sparse: true, unique: true }
+  phone: { type: String, sparse: true, unique: true },
+  latitude: { type: String },
+  longitude: { type: String },
+  address: { type: String }
 }, { timestamps: true });
 
 userSchema.pre('save', async function(next) {

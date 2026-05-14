@@ -95,6 +95,28 @@ Pre-built Docker images are available for both services:
 - **Success Response**: Returns a Bearer token and user details.
 - **Notes**: If the phone number is new, a user account is auto-created. On success, the OTP is invalidated (single-use).
 
+#### Get Profile
+- **URL**: `/api/auth/profile`
+- **Method**: `GET`
+- **Auth**: `Bearer <token>`
+- **Success Response**: Returns the logged-in user's profile (password excluded).
+
+#### Update Profile
+- **URL**: `/api/auth/profile`
+- **Method**: `PUT`
+- **Auth**: `Bearer <token>`
+- **Body**: `JSON` (all fields optional)
+  ```json
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "latitude": "40.7128",
+    "longitude": "-74.0060",
+    "address": "123 Main St, New York, NY"
+  }
+  ```
+- **Notes**: Use this to complete your profile after OTP login. Location fields store Google Maps coordinates and formatted address.
+
 ---
 
 ### Product Service (Port 5002)
