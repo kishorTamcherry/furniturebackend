@@ -6,6 +6,11 @@ export const list = asyncHandler(async (req, res) => {
   res.json(products);
 });
 
+export const get = asyncHandler(async (req, res) => {
+  const product = await productService.getProductById(req.params.id);
+  res.json(product);
+});
+
 export const create = asyncHandler(async (req, res) => {
   const data = { ...req.body };
   if (req.file) {

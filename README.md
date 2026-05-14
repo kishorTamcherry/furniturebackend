@@ -78,6 +78,11 @@ Pre-built Docker images are available for both services:
 - **Method**: `GET`
 - **Access**: Public
 
+#### Get Product by ID
+- **URL**: `/api/products/:id`
+- **Method**: `GET`
+- **Access**: Public
+
 #### Add Product
 - **URL**: `/api/products`
 - **Method**: `POST`

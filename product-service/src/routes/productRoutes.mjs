@@ -8,6 +8,7 @@ import { productSchema, updateProductSchema } from '../validation/productSchema.
 const router = express.Router();
 
 router.get('/', productController.list);
+router.get('/:id', productController.get);
 router.post('/', auth, upload.single('image'), validate(productSchema), productController.create);
 router.put('/:id', auth, upload.single('image'), validate(updateProductSchema), productController.update);
 router.delete('/:id', auth, productController.remove);
