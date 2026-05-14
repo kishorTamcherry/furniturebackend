@@ -10,3 +10,12 @@ export const loginSchema = z.object({
   email: z.string().email('Invalid email format'),
   password: z.string().min(1, 'Password is required')
 });
+
+export const phoneSchema = z.object({
+  phone: z.string().regex(/^\+[1-9]\d{1,14}$/, 'Phone must be in E.164 format (e.g. +1234567890)')
+});
+
+export const otpSchema = z.object({
+  phone: z.string().regex(/^\+[1-9]\d{1,14}$/, 'Phone must be in E.164 format (e.g. +1234567890)'),
+  otp: z.string().length(6, 'OTP must be exactly 6 digits')
+});

@@ -18,6 +18,7 @@ The system is split into two independent services to ensure scalability and sepa
     -   **Redis**: Session storage and token management.
 -   **Containerization**: Docker & Docker Compose
 -   **Security**: JSON Web Tokens (JWT) & Bcrypt (Password Hashing)
+-   **SMS/OTP**: Twilio (Phone number authentication)
 -   **File Handling**: Multer (Multipart Form-Data)
 
 ## Setup and Deployment
@@ -68,6 +69,31 @@ Pre-built Docker images are available for both services:
 - **Method**: `POST`
 - **Body**: `JSON`
 - **Success Response**: Returns a Bearer token and user details.
+
+#### Send OTP
+- **URL**: `/api/auth/send-otp`
+- **Method**: `POST`
+- **Body**: `JSON`
+  ```json
+  {
+    "phone": "+1234567890"
+  }
+  ```
+- **Phone Format**: E.164 (e.g. `+18777804236`)
+- **Notes**: Sends a 6-digit OTP via Twilio SMS. In development without Twilio credentials, the OTP is logged to the server console.
+
+#### Verify OTP & Login
+- **URL**: `/api/auth/verify-otp`
+- **Method**: `POST`
+- **Body**: `JSON`
+  ```json
+  {
+    "phone": "+1234567890",
+    "otp": "604612"
+  }
+  ```
+- **Success Response**: Returns a Bearer token and user details.
+- **Notes**: If the phone number is new, a user account is auto-created. On success, the OTP is invalidated (single-use).
 
 ---
 
